@@ -39,3 +39,43 @@ var run = function(application) {
             return radio[i].value;
     }
 };
+
+
+function getLocation() {
+
+     // Error callback function telling the user that there was a problem retrieving GPS.
+
+     var fail = function(error){
+
+          if (navigator.notification.activityStop) navigator.notification.activityStop(); // only call this if the function exists as it is iPhone only.
+
+          alert("Failed to get GPS location");
+
+     };
+
+     if(navigator.geolocation) {
+
+          if (navigator.notification.activityStart) navigator.notification.activityStart(); // only call this if the function exists as it is iPhone only.
+
+          // Success callback function that will grab coordinate information and display it in an alert.
+
+          var suc = function(p) {
+
+                if (navigator.notification.activityStop) navigator.notification.activityStop(); // only call this if the function exists as it is iPhone only.
+
+                alert("Latitude:"+p.coords.latitude + " " + p.coords.longitude);
+
+          };
+
+          // Now make the PhoneGap JavaScript API call, passing in success and error callbacks as parameters, respectively.
+
+          navigator.geolocation.getCurrentPosition(suc,fail);
+
+     } else {
+
+          fail();
+
+     }
+
+}
+
